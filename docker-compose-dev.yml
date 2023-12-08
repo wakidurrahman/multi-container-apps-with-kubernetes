@@ -1,0 +1,69 @@
+# development environment specific only 
+version: '3.1'
+services:
+  # https://hub.docker.com/_/postgres
+  postgres:
+    image: 'postgres:latest'
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # https://github.com/docker-library/docs/blob/master/postgres/README.md#environment-variables
+    environment:
+      - POSTGRES_DB=pgmulticontainer
+      - POSTGRES_PASSWORD=3497Wa
+  redis:
+    image: 'redis:latest'
+  nginx:
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+    build:
+      context: nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3050:80'
+  backend:
+    # Build api service
+    build:
+      context: backend
+      dockerfile: Dockerfile.dev
+    # Add a new volume to the api service for the bind mount.
+    volumes:
+      # Inside the container, don't try to override this folder. Don't try to override it, don't try to redirect access to it, just leave that folder as is.
+      - /usr/src/app/node_modules
+      # Look at the `server` directory, and copy everything inside there into the `app` folder of the container.
+      - ./backend:/usr/src/app
+    # https://docs.docker.com/compose/environment-variables/set-environment-variables/#use-the-environment-attribute
+    # You can set environment variables in a service's containers with the environment attribute in your Compose file.
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=pgmulticontainer
+      - PGPASSWORD=3497Wa
+      - PGPORT=5432
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /usr/src/app/node_modules
+      - ./frontend:/usr/src/app
+    environment:
+    # Fixes bug where websocket connection is fixed to default port 3000
+      - WDS_SOCKET_PORT=0
+  worker:
+    build:
+      context: worker
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /usr/src/app/node_modules
+      - ./worker:/usr/src/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+volumes:
+  pgdata:

@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 
-#Argument that is passed from docer-compose.yaml file
+#Argument
 ARG FRONT_END_PORT=3000
 ARG NODE_VERSION=18.10.0
 
@@ -18,7 +18,7 @@ COPY package-lock.json /usr/src/app
 RUN npm install
 
 # Get all the code needed to run the app
-COPY . /usr/src/app
+COPY ./ /usr/src/app
 
 # Serve the app
 CMD ["npm", "run", "build"]
