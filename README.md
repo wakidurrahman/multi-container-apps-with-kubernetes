@@ -1,7 +1,7 @@
-# multi-container-apps-with-kubernetes
+# Multi Container Apps With Kubernetes
 
 Build a complex multi-container application from scratch and deploy it to AWS
-
+   s
 ## Setting Frontend application
 
 1. To start a new Create React App project with TypeScript, you can run:
@@ -25,3 +25,8 @@ npm install sass
 
 ```
 
+## kubectl
+
+Object type "secret"
+
+$ kubectl create secret generic pgpassword --from-literal PGPASSWORD=123Sddb
