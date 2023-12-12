@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: backend
+  template:
+    metadata:
+      labels:
+        component: backend
+    spec:
+      containers:
+        - name: backend
+          image: wakidur/kube-multi-container-backend
+          resources:
+            limits:
+              memory: "1208Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 5000
+          env:
+            - name: REDIS_HOST
+              value: redis-clusterip-service
+            - name: REDIS_PORT
+              value: "6379"
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: postgres-clusterip-service
+            - name: PGDATABASE
+              value: pg-kube-multi-container
+            - name: PGPORT
+              value: '5432'
+            - name: PGPASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
