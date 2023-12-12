@@ -31,7 +31,7 @@ npm install sass
 
 - [x] pods
 - [x] Deployment
-   - [ ] services
+- [ ] services
    - clusterIp
    - NodePort
    - LoadBalancer
@@ -42,22 +42,3 @@ npm install sass
 - Object type "secret" create command
 
 ```$ kubectl create secret generic pgpassword --from-literal PGPASSWORD=123Sddb```
-
-#### Service. 
-
-backend-clusterip-service.yml
-frontend-clusterip-service.yml
-redis-clusterip-service.yml
-postgres-clusterip-service.yml
-
-#### Deployment.
-
-frontend-deployment.yml
-backend-deployment.yml
-worker-deployment.yml
-redis-deployment.yml
-postgres-deployment.yml
-
-#### Persistent Volume Claim (PersistentVolumeClaim)
-
-database-persistent-volume-claim.yml
