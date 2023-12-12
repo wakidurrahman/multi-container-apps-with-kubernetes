@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+
+spec:
+  ingressClassName: nginx
+  # ADD INGRESSCLASSNAME FIELD
+  rules:
+    - http:
+        paths:
+          - path: /?(.*)
+            # UPDATE PATH
+            pathType: ImplementationSpecific
+            # ADD PATHTYPE
+            backend:
+              service:
+                # UPDATE SERVICE FIELDS
+                name: frontend-clusterip-service
+                port:
+                  number: 3000
+          - path: /backend/?(.*)
+            # UPDATE PATH
+            pathType: ImplementationSpecific
+            # ADD PATHTYPE
+            backend:
+              service:
+                # UPDATE SERVICE FIELDS
+                name: backend-clusterip-service
+                port:
+                  number: 5000
