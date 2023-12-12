@@ -14,11 +14,7 @@ spec:
     spec:
       containers:
         - name: worker
-          image: wakidur/kube-multi-container-worker
-          resources:
-            limits:
-              memory: "1208Mi"
-              cpu: "500m"
+          image: wakidur/kube-multi-container-worker:latest
           env:
             - name: REDIS_HOST
               value: redis-clusterip-service
