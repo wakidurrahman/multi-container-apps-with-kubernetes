@@ -14,11 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: wakidur/kube-multi-container-backend
-          resources:
-            limits:
-              memory: "1208Mi"
-              cpu: "500m"
+          image: wakidur/kube-multi-container-backend:latest
           ports:
             - containerPort: 5000
           env:
