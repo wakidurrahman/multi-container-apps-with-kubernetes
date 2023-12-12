@@ -31,7 +31,7 @@ npm install sass
 
 - [x] pods
 - [x] Deployment
-- [ ] services
+- [x] services
    - clusterIp
    - NodePort
    - LoadBalancer
@@ -42,3 +42,18 @@ npm install sass
 - Object type "secret" create command
 
 ```$ kubectl create secret generic pgpassword --from-literal PGPASSWORD=123Sddb```
+
+### Builds and pushes to the Docker Hub repository CI.
+
+```
+.github/workflows/builds-and-push-to-dockerhub.yml
+
+name: Builds and pushes to the Docker Hub repository CI
+run-name: Push Docker image to Docker Hub.
+on:
+  push:
+    branches: ["main"]
+   ............
+   ............
+   ............
+```

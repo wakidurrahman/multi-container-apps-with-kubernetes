@@ -21,12 +21,12 @@ RUN npm install
 COPY ./ /usr/src/app
 
 # Serve the app
-CMD ["npm", "run", "build"]
+RUN npm run build
 
 # Run frontend app form build 
 FROM nginx
 EXPOSE ${FRONT_END_PORT}
-COPY ./nginx/default.conf /usr/share/nginx/html 
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf 
 COPY --from=base /usr/src/app/build /usr/share/nginx/html
 
 
